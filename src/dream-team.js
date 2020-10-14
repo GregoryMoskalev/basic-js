@@ -1,6 +1,20 @@
-const CustomError = require("../extensions/custom-error");
+module.exports = function createDreamTeam(arrayOfMembersName) {
+  if (!Array.isArray(arrayOfMembersName)) return false;
 
-module.exports = function createDreamTeam(/* members */) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
+  const arrayOfFirstLetters = [];
+
+  arrayOfMembersName.forEach((name) => {
+    if (typeof name === 'string') {
+      name = name.trim();
+      name = name[0].toUpperCase();
+    } else {
+      name = '';
+    }
+    arrayOfFirstLetters.push(name);
+  });
+
+  const sortedArrayOfFirstLetters = arrayOfFirstLetters.sort();
+  const teamName = sortedArrayOfFirstLetters.join('');
+
+  return teamName || false; //return false if teamName is empty(all members name are wrong)
 };
