@@ -19,25 +19,11 @@ module.exports = function transform(arr) {
         if (index > 0 && arr[index - 2] !== '--discard-next') result.push(arr[index - 1]);
         break;
       default:
-        // console.log(arr[index]);
         result.push(arr[index]);
         break;
     }
   }
 
-  // result.length < 7 && console.log(arr, result);
   return result;
 };
-
-// transform([
-//   '--double-prev',
-//   1,
-//   '--double-prev',
-//   0,
-//   '--discard-next',
-//   333,
-//   333,
-//   'DEF',
-//   '--double-next'
-// ]);
 
