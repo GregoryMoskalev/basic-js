@@ -1,6 +1,43 @@
-const CustomError = require("../extensions/custom-error");
+module.exports = function transform(arr) {
+  if (!Array.isArray(arr)) throw new Error();
+  if (!arr.length) return arr;
 
-module.exports = function transform(/* arr */) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
+  const result = [];
+
+  for (let index = 0; index < arr.length; index++) {
+    switch (arr[index]) {
+      case '--discard-next':
+        if (index < arr.length - 1) index++;
+        break;
+      case '--discard-prev':
+        if (index > 0 && arr[index - 2] !== '--discard-next') result.pop();
+        break;
+      case '--double-next':
+        if (index < arr.length - 1) result.push(arr[index + 1]);
+        break;
+      case '--double-prev':
+        if (index > 0 && arr[index - 2] !== '--discard-next') result.push(arr[index - 1]);
+        break;
+      default:
+        // console.log(arr[index]);
+        result.push(arr[index]);
+        break;
+    }
+  }
+
+  // result.length < 7 && console.log(arr, result);
+  return result;
 };
+
+// transform([
+//   '--double-prev',
+//   1,
+//   '--double-prev',
+//   0,
+//   '--discard-next',
+//   333,
+//   333,
+//   'DEF',
+//   '--double-next'
+// ]);
+
